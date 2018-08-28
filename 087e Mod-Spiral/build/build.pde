@@ -48,14 +48,14 @@ void draw() {
 	}
 	popMatrix();
 	surfaceItems();
-	vStart+=(PI/480);
-	uStart-=(PI/480);
-	if (vStart >= vMax || vStart <= vMin) {
-		vStart = vMax;
-	}
-	if (uStart >= uMax || uStart <= uMin) {
-		uStart = uMin;
-	}
+	// vStart+=(PI/480);
+	// uStart-=(PI/480);
+	// if (vStart >= vMax || vStart <= vMin) {
+	// 	vStart = vMax;
+	// }
+	// if (uStart >= uMax || uStart <= uMin) {
+	// 	uStart = uMin;
+	// }
 }
 
 void surfaceItems() {

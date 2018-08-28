@@ -1,3 +1,5 @@
+import processing.pdf.*;
+
 float u,v,w = 0;
 float x,y,z,s = 0;
 float uMin,uMax,vMin,vMax,wMin,wMax,uStart,vStart;
@@ -9,6 +11,8 @@ String data = "../../data/";
 String img = "res_F2143D6A_chem.png";
 PImage colorFile;
 Wave wave;
+
+boolean printToPdf = false;
 
 void setup() {
   size(1440,800,P3D);
@@ -28,6 +32,9 @@ void setup() {
 }
 
 void draw() {
+	if(printToPdf) {
+		beginRaw(PDF, "out/" + frameCount + ".pdf");
+	}
 	u = 0;
 	v = 0;
 	s = (frameCount/1000.0) + 1;
@@ -56,6 +63,11 @@ void draw() {
 	// if (uStart >= uMax || uStart <= uMin) {
 	// 	uStart = 0;
 	// }
+
+	if(printToPdf)  {
+		endRaw();
+		printToPdf = false;
+	}
 }
 
 void surfaceItems() {
@@ -68,8 +80,8 @@ void createPts() {
 	    //for(v = vMin; v <= vMin+vMax; v+=((vMax-vMin)/iter)) {
 	    for(v = vStart; v <= vMin+vMax; v+=((vMax-vMin)/iter)) {
 	    	x = atan( u * sin(v) * cos(4*u) ) * scalar;
-	    	y = ( u * sin(v) * atan(4*u) ) * scalar;
-	    	//y = sin(sin( u * atan(v) * atan(4*u) )) * scalar;
+	    	// y = ( u * sin(v) * atan(4*u) ) * scalar;
+	    	y = sin(sin( u * atan(v) * atan(4*u) )) * scalar;
 	    	// x =  ( u * sin(v) * cos(4*u) ) * scalar;
 	    	// y =  ( u * sin(v) * sin(4*u) ) * scalar;
 	    	//z =  u * cos(u+v) * scalar;
@@ -106,4 +118,11 @@ class ColorPt {
 		pt = new PVector(x,y,z);
 		c = _c;
 	}
+}
+
+void keyPressed() {
+	switch(key) {
+        case ' ' : printToPdf = !printToPdf;
+            break;
+    }
 }
